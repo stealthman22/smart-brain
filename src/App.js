@@ -1,15 +1,15 @@
 import React from 'react';
 import './App.css';
-import Navigation from './components/Navigation/Navigation'
+import Navigation from './Components/Navigation/Navigation'
 
 
 function App() {
   return (
     <div className="App">
-      { < Navigation />
-   {/*<Logo />
+      < Navigation />
+      {/*<Logo />
    <ImageLinKForm />
-   <FaceRecognition /> */}}
+   <FaceRecognition /> */}
     </div>
   );
 }
