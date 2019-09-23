@@ -5,8 +5,8 @@ body {
     -moz-osx-font-smoothing: grayscale;
     /* Added declarations */
     background: linear-gradient(89deg, #ff5edf 0%, #04c8de 100%);
-    /* Fixed the black screen issue */
-    height: 100vh;
+    /* Fixed the black screen issue 
+    height: 100vh;*/
 }
 
 code {

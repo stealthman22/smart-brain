@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Navigation from './Components/Navigation/Navigation'
 import Logo from './Components/Logo/Logo';
-//import ImageLinKForm from './Components/ImageLinkForm/ImageLinkForm'
+import ImageLinKForm from './Components/ImageLinkForm/ImageLinkForm'
 
 
 function App() {
@@ -10,8 +10,9 @@ function App() {
     <div className="App">
       < Navigation />
       <Logo />
-      {/* <ImageLinKForm />
-     <FaceRecognition /> */}
+      <ImageLinKForm />
+      {/* <Rank />
+       <FaceRecognition /> */}
     </div>
   );
 }
