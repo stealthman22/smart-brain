@@ -5,7 +5,7 @@ const Rank = () => {
 
         <div>
             <div className='white f3'>
-                {'Anrei your current rank is...'}
+                {'Joel your current rank is...'}
 
                 <div className='white f1`'>
                     {'#5'}
@@ -18,3 +18,4 @@ const Rank = () => {
 }
 
 export default Rank;
+
