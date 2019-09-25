@@ -30,7 +30,7 @@ const particlesOption = {
 // You have to use class syntax once state or this is involved
 // class 
 //constructor
-//super
+//super : what does super do?
 // state
 class App extends Component {
   constructor() {
@@ -40,6 +40,7 @@ class App extends Component {
     }
   }
 
+  //track changes to text area of input
   onInputChange = (e) => {
     //target.value gets the exact value
     console.log(e.target.value);
@@ -59,7 +60,7 @@ class App extends Component {
 
         < Navigation />
         <Logo />
-        {/* Passing inputchange prop  You must add this to access it because it is a property of the app*/}
+        {/* Passing inputchange prop  You must add this to access it because it is a property of the App class*/}
         <ImageLinKForm onInputChange={this.onInputChange}
           onButtonSubmit={this.onButtonSubmit} />
         <Rank />
