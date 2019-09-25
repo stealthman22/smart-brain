@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import Particles from 'react-particles-js';
+import Clarifai from "clarifai";
+
 import './App.css';
 import Navigation from './Components/Navigation/Navigation'
 import Logo from './Components/Logo/Logo';
 import ImageLinKForm from './Components/ImageLinkForm/ImageLinkForm'
 import Rank from './Components/Rank/Rank';
+
+// for clarifai
+const app = new Clarifai.App({ apiKey: '123ee1204be645ecb5012a411f7275dd' });
 
 const particlesOption = {
 
@@ -49,6 +54,13 @@ class App extends Component {
   // Detect an image
   onButtonSubmit = () => {
     console.log('click')
+    app.models.initModel({ id: Clarifai.GENERAL_MODEL, version: "aa7f35c01e0642fda5cf400f543e7c40" })
+      .then(generalModel => {
+        return generalModel.predict("the-image-url");
+      })
+      .then(response => {
+        var concepts = response['outputs'][0]['data']['concepts']
+      })
   }
 
   render() {
