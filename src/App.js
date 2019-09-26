@@ -54,6 +54,7 @@ class App extends Component {
   // Detect an image
   onButtonSubmit = () => {
     console.log('click')
+    // Importing the clarifai Api
     app.models.initModel({ id: Clarifai.GENERAL_MODEL, version: "aa7f35c01e0642fda5cf400f543e7c40" })
       .then(generalModel => {
         return generalModel.predict("the-image-url");
@@ -72,7 +73,7 @@ class App extends Component {
 
         < Navigation />
         <Logo />
-        {/* Passing inputchange prop  You must add this to access it because it is a property of the App class*/}
+        {/* Passing inputchange prop  You must add this. to access it because it is a property of the App class*/}
         <ImageLinKForm onInputChange={this.onInputChange}
           onButtonSubmit={this.onButtonSubmit} />
         <Rank />
