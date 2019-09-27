@@ -6,7 +6,9 @@ body {
     /* Added declarations */
     background: linear-gradient(89deg, #ff5edf 0%, #04c8de 100%);
     /* Fixed the black screen issue 
-    height: 100vh;*/
+    But affects particle.js
+    */
+    height: 100vh;
 }
 
 code {

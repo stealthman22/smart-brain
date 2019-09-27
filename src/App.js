@@ -60,7 +60,7 @@ class App extends Component {
         return generalModel.predict("the-image-url");
       })
       .then(response => {
-        var concepts = response['outputs'][0]['data']['concepts']
+        //  var concepts = response['outputs'][0]['data']['concepts']
       })
   }
 
