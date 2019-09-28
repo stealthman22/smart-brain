@@ -7,6 +7,7 @@ import Navigation from './Components/Navigation/Navigation'
 import Logo from './Components/Logo/Logo';
 import ImageLinKForm from './Components/ImageLinkForm/ImageLinkForm'
 import Rank from './Components/Rank/Rank';
+import FaceRecognition from './Components/FaceRecognition/FaceRecognition'
 
 // for clarifai
 const app = new Clarifai.App({ apiKey: '123ee1204be645ecb5012a411f7275dd' });
@@ -15,10 +16,10 @@ const particlesOption = {
 
   "particles": {
     "number": {
-      "value": 60
+      "value": 70
     },
     "size": {
-      "value": 5
+      "value": 3
     }
   },
   "interactivity": {
@@ -42,26 +43,32 @@ class App extends Component {
     super();
     this.state = {
       input: '',
+      imageUrl: ''
     }
   }
 
   //track changes to text area of input
   onInputChange = (e) => {
     //target.value gets the exact value
-    console.log(e.target.value);
+    this.setState({ input: e.target.value });
   }
 
   // Detect an image
   onButtonSubmit = () => {
-    console.log('click')
-    // Importing the clarifai Api
-    app.models.initModel({ id: Clarifai.GENERAL_MODEL, version: "aa7f35c01e0642fda5cf400f543e7c40" })
-      .then(generalModel => {
-        return generalModel.predict("the-image-url");
-      })
-      .then(response => {
-        //  var concepts = response['outputs'][0]['data']['concepts']
-      })
+    // this.state helps it target what input has been defined as in the App class
+    this.setState({ imageUrl: this.state.input })
+    // Outputs result of this.state.input
+    app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+      .then(
+        function (response) {
+          // do something with response
+          console.log(response.outputs[0].data.regions[0].region_info.bounding_box)
+
+        },
+        function (err) {
+          // there was an error
+        }
+      );
   }
 
   render() {
@@ -77,7 +84,7 @@ class App extends Component {
         <ImageLinKForm onInputChange={this.onInputChange}
           onButtonSubmit={this.onButtonSubmit} />
         <Rank />
-        {/*  <FaceRecognition /> */}
+        <FaceRecognition imageUrl={this.state.imageUrl} />
       </div>
     )
   }

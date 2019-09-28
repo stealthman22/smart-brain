@@ -7,8 +7,9 @@ body {
     background: linear-gradient(89deg, #ff5edf 0%, #04c8de 100%);
     /* Fixed the black screen issue 
     But affects particle.js
-    */
-    height: 100vh;
+   I think this has something to do with the service worker on offline mode 
+    height: 100vh;*/
+    padding-bottom: 20px;
 }
 
 code {
