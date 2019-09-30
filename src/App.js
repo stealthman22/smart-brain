@@ -48,7 +48,7 @@ class App extends Component {
     }
   }
 
-  calculateFaceLocation = () => {
+  calculateFaceLocation = (data) => {
 
   }
 
@@ -67,6 +67,8 @@ class App extends Component {
       .then(
         function (response) {
           // do something with response
+          // Use the clarifai response to call the calc method
+          this.calculateFaceLocation(response);
           console.log(response.outputs[0].data.regions[0].region_info.bounding_box)
 
         },
