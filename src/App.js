@@ -49,7 +49,27 @@ class App extends Component {
   }
 
   calculateFaceLocation = (data) => {
+    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
 
+    // DOM manipulation to get bounding box  to show
+    const image = document.getElementById('inputImage');
+    const width = Number(image.width);
+    const height = Number(image.height);
+    console.log(width, height);
+    // Whatever is returned here is the box parameter
+    return {
+      leftCol: clarifaiFace.left_col * width,
+      topRow: clarifaiFace.top_row * height,
+      rightCol: width - (clarifaiFace.right_col * width),
+      bottomRow: height - (clarifaiFace.bottom_row * height)
+    }
+
+  }
+
+  displayBoundingBox = (box) => {
+    // Updates the box state with the return values in calc face method
+    console.log(box)
+    this.setState({ box: box });
   }
 
   //track changes to text area of input
@@ -64,18 +84,9 @@ class App extends Component {
     this.setState({ imageUrl: this.state.input })
     // Outputs result of this.state.input
     app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-      .then(
-        function (response) {
-          // do something with response
-          // Use the clarifai response to call the calc method
-          this.calculateFaceLocation(response);
-          console.log(response.outputs[0].data.regions[0].region_info.bounding_box)
-
-        },
-        function (err) {
-          // there was an error
-        }
-      );
+      // use the clarifai response to call the calculateFace method
+      // return value of calc method is needed by display method to render bounding box
+      .then(response => this.displayBoundingBox(this.calculateFaceLocation(response))).catch(err => console.log(err))
   }
 
   render() {
@@ -91,7 +102,7 @@ class App extends Component {
         <ImageLinKForm onInputChange={this.onInputChange}
           onButtonSubmit={this.onButtonSubmit} />
         <Rank />
-        <FaceRecognition imageUrl={this.state.imageUrl} />
+        <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl} />
       </div>
     )
   }
@@ -101,6 +112,23 @@ export default App;
 
 
 
-this.setState((state, props) => {
-  return { counter: state.counter + props.step };
-});
+
+
+
+/*
+Line 69 -71 was modifed to use => syntax
+
+Block 51
+We are creating an id , after boxing the response into a variable. This id is going to represnt the bouding box, i.e it will serve as an endpoint we can use to grab this box and manipulate it
+
+We wrap width and height in a Number because it will return a string, but we wish to do some calculations on them
+
+Line 58 This return value is an object, and is what will fill up the  object returned by the box state;
+
+left col: Is the  left_col property of the clarifaiFace variable
+it is the percentage of the width, which gives us the width of the actual displayed image and where the left column of the bounding box should be.
+
+line 88 :
+calculateFaceLocation takes the response, returns the object of it's return value, which is piped into displayBoundingBox
+
+*/
