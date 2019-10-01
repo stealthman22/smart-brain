@@ -16,7 +16,7 @@ const particlesOption = {
 
   "particles": {
     "number": {
-      "value": 70
+      "value": 50
     },
     "size": {
       "value": 3
@@ -98,3 +98,9 @@ class App extends Component {
 }
 
 export default App;
+
+
+
+this.setState((state, props) => {
+  return { counter: state.counter + props.step };
+});
