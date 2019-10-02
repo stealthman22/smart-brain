@@ -148,7 +148,7 @@ class App extends Component {
   Line 69 -71 was modifed to use => syntax
   
   Block 51
-  We are creating an id , after boxing the response into a variable. This id is going to represnt the bouding box, i.e it will serve as an endpoint we can use to grab this box and manipulate it
+  We are creating an id , after boxing the response into a variable. This id is going to represent the bouding box, i.e it will serve as an endpoint we can use to grab this box and manipulate it
   
   We wrap width and height in a Number because it will return a string, but we wish to do some calculations on them
   
