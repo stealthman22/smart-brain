@@ -18,10 +18,10 @@ const particlesOption = {
 
   "particles": {
     "number": {
-      "value": 60
+      "value": 80
     },
     "size": {
-      "value": 2
+      "value": 4      
     }
   },
   "interactivity": {
