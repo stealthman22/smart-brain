@@ -52,8 +52,29 @@ class App extends Component {
             imageUrl: '',
             box: {},
             route: 'signin',
-            isSignedIn: false
+            isSignedIn: false,
+            // for user profile returned by register component
+            user: {
+                id: '',
+                name: '',
+                email: '',
+                entries: 0,
+                joined: ''
+            }
         }
+    }
+
+    // Will update state with user loaded from register component
+    loadUser = (data) => {
+        this.setState({
+            user: {
+                id: 'data.id',
+                name: 'data.name',
+                email: 'data.email',
+                entries: 'data.entries',
+                joined: 'data.joined'
+            }
+        })
     }
 
     // Life cycle hook to connect with server connection
@@ -168,7 +189,7 @@ class App extends Component {
                                     imageUrl
                                 } /> </div> : (route === 'signin' ?
                                     <SignIn onRouteChange={
-                                        this.onRouteChange} /> : <Register onRouteChange={this.onRouteChange} />
+                                        this.onRouteChange} /> : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
                         )
                 } </div>
 

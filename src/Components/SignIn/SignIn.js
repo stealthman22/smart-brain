@@ -1,6 +1,6 @@
 import React from 'react';
 
-
+// converted to smart component
 class SignIn extends React.Component {
     //pass props to both constructor and super for it to work
     constructor(props) {
@@ -70,12 +70,12 @@ class SignIn extends React.Component {
                                 </div>
                             </fieldset>
 
-                            <div onClick={() => onRouteChange('home')}
-                                className="">
+                            {/* {specyfying the path for this event on div;  {() => onRouteChange('home')} caused the signin route to bypass the conditional specified in the  onSubmitSignIn method} */}
+                            <div>
                                 <input
                                     // Event for signin
                                     onClick={this.onSubmitSignIn}
-                                    className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+                                    className="b ph3 pv2                              input-reset ba b--black bg-transparent grow pointer f6 dib"
                                     type="submit"
                                     value="Sign in" />
                             </div>

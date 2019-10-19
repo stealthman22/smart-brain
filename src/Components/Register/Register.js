@@ -1,41 +1,106 @@
 import React from 'react';
 
 
-const Register = ({ onRouteChange }) => {
-    return (
-        <div>
-            <article className="br3 ba  b--black-10 mv6 w-100 w-50-m w-25-l mw5  shadow-5 center">
-                <main className="pa4 black-80">
-                    <div className="measure ">
-                        <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-                            <legend className="f1 fw6 ph0 mh0">Register</legend>
-                            <div className="mv3">
-                                <label className="db fw6 lh-copy f6" htmlFor="name">Name</label>
-                                <input className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="name" id="name" />
-                            </div>
-                            <div className="mt3">
-                                <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
-                                <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="email" name="email-address" id="email-address" />
-                            </div>
+class Register extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            email: '',
+            password: ''
+        }
+    }
 
-                            <div className="mv3">
-                                <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
-                                <input className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password" id="password" />
-                            </div>
+    onNameChange = (event) => {
+        this.setState({ name: event.target.value })
+    }
+    onEmailChange = (event) => {
+        this.setState({ email: event.target.value })
+    }
 
-                        </fieldset>
-                        <div onClick={() => onRouteChange('home')}
-                            className="">
-                            <input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
-                                type="submit"
-                                value="Register" />
+    onPasswordChange = (event) => {
+        this.setState({ password: event.target.value })
+    }
+
+    onSubmitSignIn = () => {
+        // function to send the sign in request to the server
+        // configure for post req, using second argument
+        fetch('http://localhost:3000/register', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: this.state.email,
+                password: this.state.password,
+                name: this.state.name
+            })
+        })
+            .then(response => response.json())
+            .then(user => {
+                if (user) {
+                    //function to load user profile
+                    // when the entire component needs something:
+                    //  load it in by using this.props
+                    this.props.loadUser(user)
+                    this.props.onRouteChange('home');
+                }
+            })
+    }
+
+    render() {
+
+        return (
+            <div>
+                <article className="br3 ba  b--black-10 mv6 w-100 w-50-m w-25-l mw5  shadow-5 center">
+                    <main className="pa4 black-80">
+                        <div className="measure ">
+                            <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
+                                <legend className="f1 fw6 ph0 mh0">Register</legend>
+                                <div className="mv3">
+                                    <label className="db fw6 lh-copy f6" htmlFor="name">Name</label>
+                                    <input
+                                        className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+                                        type="text"
+                                        name="name"
+                                        id="name"
+                                        onChange={this.onNameChange}
+                                    />
+                                </div>
+                                <div className="mt3">
+                                    <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
+                                    <input
+                                        className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+                                        type="email"
+                                        name="email-address"
+                                        id="email-address"
+                                        onChange={this.onEmailChange}
+                                    />
+                                </div>
+
+                                <div className="mv3">
+                                    <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
+                                    <input
+                                        className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+                                        type="password"
+                                        name="password"
+                                        id="password"
+                                        onChange={this.onPasswordChange}
+                                    />
+                                </div>
+
+                            </fieldset>
+                            <div>
+                                <input onClick={this.onSubmitSignIn}
+                                    className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+                                    type="submit"
+                                    value="Register" />
+                            </div>
                         </div>
-                    </div>
 
-                </main>
-            </article>
-        </div >
-    )
+                    </main>
+                </article>
+            </div >
+        )
+    }
 }
 
 export default Register;
