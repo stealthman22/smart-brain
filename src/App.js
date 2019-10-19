@@ -68,11 +68,11 @@ class App extends Component {
     loadUser = (data) => {
         this.setState({
             user: {
-                id: 'data.id',
-                name: 'data.name',
-                email: 'data.email',
-                entries: 'data.entries',
-                joined: 'data.joined'
+                id: data.id,
+                name: data.name,
+                email: data.email,
+                entries: data.entries,
+                joined: data.joined
             }
         })
     }
@@ -121,7 +121,7 @@ class App extends Component {
     }
 
     // Detect an image
-    onButtonSubmit = () => {
+    onPictureSubmit = () => {
         // this.state helps it target what input has been defined as in the App class
         this.setState({
             imageUrl: this.state.input
@@ -130,7 +130,24 @@ class App extends Component {
         app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
             // use the clarifai response to call the calculateFace method
             // return value of calc method is needed by display method to render bounding box
-            .then(response => this.displayBoundingBox(this.calculateFaceLocation(response))).catch(err => console.log(err))
+            .then(response => {
+                if (response) {
+                    fetch('http://localhost:3000/image', {
+                        method: 'put',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            id: this.state.user.id
+                        })
+                    }).then(response => response.json())
+                        .then(count => {
+                            // Object.assign prevents setState 
+                            // from changing objects value
+                            this.setState(Object.assign(this.state.user, { entries: count }))
+                        })
+                }
+                this.displayBoundingBox(this.calculateFaceLocation(response))
+            })
+            .catch(err => console.log(err))
     }
 
     //Naming the value of route our param, it simply means  the state of route will be equal to  whatever the value of onRouteChange is
@@ -173,23 +190,29 @@ class App extends Component {
                     onRouteChange={
                         this.onRouteChange
                     } />
+
+                { /* This conditional determines what is rendered as signin. hence when state is sign in the first expression is run */}
                 {
-                    /* This conditional determines what is rendered as signin. hence when state is sign in the first expression is run */
-                } {
                     route === 'home' ? <div >
-                        <Logo /> { // Passing inputchange prop  You must add this. to access it because it is a property of the App class
-                        } <Rank />
+                        <Logo />
+
+                        <Rank name={this.state.user.name} entries={this.state.user.entries} />
+                        { // Passing inputchange prop  You must add this. to access it because it is a property of the App class
+                        }
                         <ImageLinKForm onInputChange={
                             this.onInputChange
                         }
-                            onButtonSubmit={
-                                this.onButtonSubmit
-                            } />  <FaceRecognition box={box}
-                                imageUrl={
-                                    imageUrl
-                                } /> </div> : (route === 'signin' ?
-                                    <SignIn onRouteChange={
-                                        this.onRouteChange} /> : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+                            onPictureSubmit={
+                                this.onPictureSubmit
+                            } />
+
+                        <FaceRecognition box={box}
+                            imageUrl={
+                                imageUrl
+                            } /> </div> : (route === 'signin' ?
+                                <SignIn loadUser={this.loadUser} onRouteChange={
+                                    this.onRouteChange} /> :
+                                <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
                         )
                 } </div>
 
