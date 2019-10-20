@@ -206,6 +206,7 @@ class App extends Component {
                                 this.onPictureSubmit
                             } />
 
+                        {/* Turnery operator present, toggling between sign in and register route */}
                         <FaceRecognition box={box}
                             imageUrl={
                                 imageUrl
