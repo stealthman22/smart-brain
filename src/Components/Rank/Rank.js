@@ -1,6 +1,6 @@
 import React from 'react';
 
-// Automstically updates name and score values of users
+// Automatically updates name and score values of users
 const Rank = ({ name, entries }) => {
     return (
 
