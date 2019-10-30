@@ -20,5 +20,5 @@ const ImageLinkForm = ({ onInputChange, onPictureSubmit }) => {
     )
 }
 
-export default ImageLinkForm; 3
+export default ImageLinkForm;
 
