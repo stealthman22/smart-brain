@@ -39,6 +39,22 @@ const particlesOption = {
 
 }
 
+
+const initialState = {
+    input: '',
+    imageUrl: '',
+    box: {},
+    route: 'signin',
+    isSignedIn: false,
+    // for user profile returned by register component
+    user: {
+        id: '',
+        name: '',
+        email: '',
+        entries: 0,
+        joined: ''
+    }
+}
 // You have to use class syntax once state or this is involved
 // class 
 //constructor
@@ -47,21 +63,7 @@ const particlesOption = {
 class App extends Component {
     constructor() {
         super();
-        this.state = {
-            input: '',
-            imageUrl: '',
-            box: {},
-            route: 'signin',
-            isSignedIn: false,
-            // for user profile returned by register component
-            user: {
-                id: '',
-                name: '',
-                email: '',
-                entries: 0,
-                joined: ''
-            }
-        }
+        this.state = initialState;
     }
 
     // Will update state with user loaded from register component
@@ -147,6 +149,7 @@ class App extends Component {
                 }
                 this.displayBoundingBox(this.calculateFaceLocation(response))
             })
+            .catch(console.log)
             .catch(err => console.log(err))
     }
 
@@ -154,9 +157,7 @@ class App extends Component {
     onRouteChange = (route) => {
         // This conditional  sets the state of isSignedin in for different states of route
         if (route === 'signout') {
-            this.setState({
-                isSignedIn: false
-            })
+            this.setState(initialState)
         } else if (route === 'home') {
             this.setState({
                 isSignedIn: true
