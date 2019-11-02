@@ -146,10 +146,10 @@ class App extends Component {
                             // from changing objects value
                             this.setState(Object.assign(this.state.user, { entries: count }))
                         })
+                        .catch(err => console.log(err))
                 }
                 this.displayBoundingBox(this.calculateFaceLocation(response))
             })
-            .catch(console.log)
             .catch(err => console.log(err))
     }
 
