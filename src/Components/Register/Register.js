@@ -36,7 +36,8 @@ class Register extends React.Component {
         })
             .then(response => response.json())
             .then(user => {
-                if (user) {
+                // .id brings the validation
+                if (user.id) {
                     //function to load user profile
                     // when the entire component needs something:
                     //  load it in by using this.props
