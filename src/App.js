@@ -2,7 +2,6 @@ import React, {
     Component
 } from 'react';
 import Particles from 'react-particles-js';
-import Clarifai from "clarifai";
 
 import './App.css';
 import Navigation from './Components/Navigation/Navigation'
@@ -13,10 +12,6 @@ import FaceRecognition from './Components/FaceRecognition/FaceRecognition';
 import SignIn from './Components/SignIn/SignIn'
 import Register from './Components/Register/Register'
 
-// for clarifai
-const app = new Clarifai.App({
-    apiKey: '123ee1204be645ecb5012a411f7275dd'
-});
 
 const particlesOption = {
 
@@ -128,10 +123,19 @@ class App extends Component {
         this.setState({
             imageUrl: this.state.input
         })
-        // Outputs result of input
-        app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-            // use the clarifai response to call the calculateFace method
-            // return value of calc method is needed by display method to render bounding box
+
+        // use the clarifai response to call the calculateFace method
+        // return value of calc method is needed by display method to render bounding box
+
+        // for clarifai
+        fetch('http://localhost:3000/image', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                id: this.state.user.id
+            })
+        })
+            .then(respone => )
             .then(response => {
                 if (response) {
                     fetch('http://localhost:3000/image', {
@@ -225,7 +229,7 @@ class App extends Component {
 export default App;
 
 
-
+// moved Clarifai to backend due to security issues with the api key.
 
 /*
   Line 69 -71 was modifed to use => syntax
